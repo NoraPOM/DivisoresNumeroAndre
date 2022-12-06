@@ -1,5 +1,6 @@
 package com.example.divisoresDeNumero.service.impl;
 
+import com.example.divisoresDeNumero.controller.ResultadoCalculos;
 import com.example.divisoresDeNumero.service.DivisorService;
 import org.springframework.stereotype.Service;
 
@@ -9,31 +10,44 @@ import java.util.List;
 @Service
 public class DivisorServiceImpl implements DivisorService {
     @Override
-       public List<List<Integer>> generarDivisores(Integer numero) {
-        List<List<Integer>> listaGeneral = new ArrayList<>();
-
-        List<Integer> listaDevolverDivisores = new ArrayList<>(); // Esta lista es para los divisores
-        //Esta primera parte devuelve los divisores de un número
-        int divisor = 2;
-        while (divisor<=numero){
-            if(numero%divisor ==0){
-                listaDevolverDivisores.add(divisor);
-            }
-            divisor = divisor +1;
+       public ResultadoCalculos generarDivisores(Integer numero) {
+        if (numero <= 0) {
+            throw new IllegalArgumentException();
         }
-        List<Integer> listaDevolverPares = new ArrayList<>(); // Esta lista es para los pares
-        //Esta segunda  parte devuelve los número pares hasta llegar al número enviado
-        int temporal = numero;
-        int divisor1 = 0;
-        for (int i=1; i<numero;i++){
-            divisor1 = temporal%2;
-            if( divisor1==0){
-                listaDevolverPares.add(temporal);
-            }
-            temporal=temporal-1;
-        }
-        listaGeneral.add(listaDevolverPares);
-        listaGeneral.add(listaDevolverDivisores);
-        return listaGeneral;
+        ResultadoCalculos resultadoCalculos = new ResultadoCalculos();
+        resultadoCalculos.setNumeroInicial(numero);
+        resultadoCalculos.setPares(devolverPares(numero));
+        resultadoCalculos.setDivisores(devolverDivisores(numero));
+        return resultadoCalculos;
     }
-}
+
+        //Esta primera parte devuelve los divisores de un número
+        public List<Integer> devolverDivisores (int num){
+            List<Integer> listaDevolverDivisores = new ArrayList<>(); // Esta lista es para los divisores
+            int divisor = 1;
+            while (divisor <= num) {
+                if (num % divisor == 0) {
+                    listaDevolverDivisores.add(divisor);
+                }
+                divisor = divisor + 1;
+            }
+            return listaDevolverDivisores;
+        }
+
+        public List<Integer> devolverPares (int num) {
+            List < Integer > listaDevolverPares = new ArrayList<>(); // Esta lista es para los pares
+            //Esta segunda  parte devuelve los número pares hasta llegar al número enviado
+            int temporal = 1;
+            int divisor1;
+            for (int i = 1; i < num; i++) {
+                divisor1 = temporal % 2;
+                if (divisor1 == 0) {
+                    listaDevolverPares.add(temporal);
+                }
+                temporal = temporal + 1;
+            }
+            return listaDevolverPares;
+        }
+
+    }
+

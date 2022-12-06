@@ -1,7 +1,7 @@
 package com.example.divisoresDeNumero.service;
 
-import java.util.List;
+import com.example.divisoresDeNumero.controller.ResultadoCalculos;
 
 public interface DivisorService {
-    List<List<Integer>> generarDivisores(Integer numero);
+    ResultadoCalculos generarDivisores(Integer numero);
 }
